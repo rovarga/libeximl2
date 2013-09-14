@@ -16,6 +16,25 @@ AC_PROG_LIBTOOL
 
 PKG_CHECK_MODULES([libxml2], [libxml-2.0 >= 2.6.0])
 
+AC_ARG_WITH([exip],
+	    AS_HELP_STRING([--with-exip=PREFIX], [Build against exip located in PREFIX]))
+
+AS_IF([test "x$with_exip" != "x"], [
+	AS_IF([test "x$with_exip" = "xno"], [
+	       AC_MSG_ERROR([Cannot build without exip])
+	])
+
+	AS_IF([test "x$with_exip" != "xyes"], [
+	       CFLAGS+=" -I$with_exip/bin/headers"
+	       LDFLAGS+=" -L$with_exip/bin/lib"
+	])
+])
+
+CFLAGS+=" -Wall -Wextra -O"
+
+AC_CHECK_HEADER([EXIParser.h], [], [AC_MSG_ERROR([Failed to find mandatory header EXIParser.h])])
+AC_CHECK_LIB([exip], [initParser], [], [AC_MSG_ERROR([Failed to find mandatory library exip])])
+
 AC_SUBST([libxml2_CFLAGS])
 AC_SUBST([libxml2_LIBS])
 

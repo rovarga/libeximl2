@@ -21,9 +21,8 @@
 #include "config.h"
 #endif
 
-#include <libxml/tree.h>
-
 #include <EXIParser.h>
 #include <stringManipulate.h>
 
+#include <libxml/tree.h>
 
